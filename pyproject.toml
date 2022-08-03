@@ -1,0 +1,59 @@
+# Python packaging & distribution
+[build-system]
+requires = ["setuptools >= 63.0.0", "setuptools.scm", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smart_agenda"
+description = "Keep track of your agenda and passed time during meetings."
+readme = "README.md"
+requires-python = ">=3.9"
+dynamic = ["version"]
+authors = [{ "name" = "Jannis Mainczyk", "email" = "jmainczyk@gmail.com" }]
+license = { text = "MIT" }
+dependencies = ["click"]
+
+[project.optional-dependencies]
+gui = ["pyside6"]
+
+[project.scripts]
+smart-agenda = "smart_agenda.cli:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+# https://docs.pytest.org/customize.html
+[tool.pytest.ini_options]
+log_cli = false
+log_cli_level = "INFO"
+# to log full filepath + line, use (%(pathname)s:%(lineno)d)
+log_format = "%(asctime)s.%(msecs)03d  %(filename)20s:%(lineno)d  %(levelname)8s  %(message)s"
+norecursedirs = [".*", "build", "env", "*.egg"]
+testpaths = ["test"]
+# also run doctests with test suite
+addopts = "--doctest-modules --doctest-continue-on-failure --benchmark-disable"
+# strip u'' and b'' from output strings in py2, to make py2 test output the same as py3
+doctest_optionflags = "ALLOW_UNICODE ALLOW_BYTES IGNORE_EXCEPTION_DETAIL"
+markers = [
+  """skip_test: marks test to skip""",
+  """slow: marks tests as slow (deselect with '-m "not slow"' or '-k "not slow"')""",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py38"]
+include = '\.pyi?$'
+extend_exclude = 'ext'
+
+# https://github.com/timothycrosley/isort
+[tool.isort]
+profile = "black"
+py_version = 39
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+combine_as_imports = true
+line_length = 120
+default_section = "THIRDPARTY"
+known_first_party = ["atria", "custom_components"]
