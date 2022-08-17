@@ -9,7 +9,7 @@ def _get_empty_table(title=None) -> Table:
     table = Table(show_header=False)
     table.add_column("Item")
     table.add_column("Plan", justify="right", no_wrap=True)
-    table.add_column("Delta", justify="right", no_wrap=True)
+    table.add_column("Delta", justify="right", no_wrap=True, min_width=6)
     if title:
         table.title = title
     return table
