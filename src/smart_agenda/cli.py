@@ -42,11 +42,12 @@ AOB          6:00
 @click.option("--example", help="Show example agenda.", is_flag=True)
 @click.option("--skip-input", help="Skip manual agenda input.", is_flag=True)
 @click.option("--demo", help="Shorthand for `--example --skip-input`.", is_flag=True)
+@click.option("--title", help="Title of your agenda.")
 @click.option("--save/--no-save", help="Save agenda for later.", default=True, show_default=True, is_flag=True)
 @recent
 @click.argument("file", type=click.File(), required=False)
 @click.pass_context
-def cli(ctx, verbose, example, save, recent, skip_input, demo, file):
+def cli(ctx, verbose, example, save, recent, skip_input, demo, title, file):
     """Smart Agenda."""
     console.clear()
     if file:
