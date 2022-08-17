@@ -59,7 +59,7 @@ def cli(ctx, verbose, example, save, recent, skip_input, demo, title, file):
     elif (example and skip_input) or demo:
         content = EXAMPLE_AGENDA
     else:
-        content = prompt_for_agenda(echo_template=example)
+        content = prompt_for_agenda(template=EXAMPLE_AGENDA if example else "", title=title)
 
     if not content.strip():
         # click.secho("No text provided.", dim=True, italic=True)
@@ -81,19 +81,15 @@ def cli(ctx, verbose, example, save, recent, skip_input, demo, title, file):
     main(agenda)
 
 
-def prompt_for_agenda(echo_template=False) -> str:
-    console.print("[d][i]Enter your agenda and press Ctrl-D (Ctrl-Z on Windows) when you are done.")
-    contents = []
-    if echo_template:
-        print(EXAMPLE_AGENDA, end="")
-        contents.extend(EXAMPLE_AGENDA.split("\n"))
-    while True:
-        try:
-            line = input()
-        except EOFError:
-            break
-        contents.append(line)
-    return "\n".join(contents) + "\n"
+def prompt_for_agenda(template: str = None, title: str = None) -> str:
+    console.print("[d][i]Enter agenda in external editor. Close the file to continue...")
+    if title:
+        if template.startswith("#"):
+            # remove template heading, as title is already provided
+            template = "\n".join(template.split("\n")[1:]).lstrip()
+        title_str = f"# {title}"
+        template = f"{title_str}\n\n{template}"
+    return click.edit(template, require_save=False) + "\n"
 
 
 KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT = [f"\x1b[{c}" for c in "ABCD"]

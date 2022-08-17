@@ -25,10 +25,11 @@ def cli() -> Callable:
     yield invoke
 
 
-def test_main(cli):
-    rv: Result = cli()
+def test_help(cli):
+    rv: Result = cli("--help")
     logging.info(rv.stdout)
     assert rv.exit_code == 0
+    assert rv.stdout.startswith("Usage: ")
 
 
 def test_script():
