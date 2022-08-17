@@ -3,7 +3,13 @@ exclude =
     # No need to traverse our git directory
     .git,
     # There's no value in checking cache directories
-    __pycache__
+    __pycache__,
+    build,
+    ext,
+    .nox,
+    .pytest_cache,
+    .mypy_cache,
+    .vscode
 per-file-ignores =
     # module-level import not at top of file
     # -> required to prevent cyclical import issues
