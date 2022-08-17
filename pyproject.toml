@@ -32,15 +32,24 @@ log_format = "%(asctime)s.%(msecs)03d  %(filename)20s:%(lineno)d  %(levelname)8s
 norecursedirs = [".*", "build", "env", "*.egg", ".nox"]
 testpaths = ["tests", "src"]
 # also run doctests with test suite
-addopts = "--doctest-modules --doctest-continue-on-failure --cov"
+addopts = "--doctest-modules --doctest-continue-on-failure"
 # strip u'' and b'' from output strings in py2, to make py2 test output the same as py3
 doctest_optionflags = "ALLOW_UNICODE ALLOW_BYTES IGNORE_EXCEPTION_DETAIL"
 
 [tool.coverage.run]
 branch = true
-command_line = "-m pytest"
-omit = ["**/gui.py", "**/tui.py", "**/__main__.py"]
+command_line = "-m pytest --cov --cov-config=pyproject.toml --cov-branch --cov-report term --cov-report html:build/coverage"
 source = ["smart_agenda"]
+omit = ["**/gui.py", "**/__main__.py"]
+
+[tool.coverage.report]
+fail_under = 100
+exclude_lines = [
+    "pragma: no cover",
+    "# nocov",
+    "uvicorn\\.run",
+    "if __name__ == .__main__.",
+]
 
 [tool.black]
 line-length = 120

@@ -87,7 +87,7 @@ class Agenda:
         # parse items to AgendaItems
         for idx, item in enumerate(self.items):
             if isinstance(item, str):
-                logging.info("parsing '%s' to AgendaItem", item)
+                logging.debug("parsing '%s' to AgendaItem", item)
                 self.items[idx] = AgendaItem(*agenda_item_pattern.search(item + "\n").groups())
 
     current_item_idx: int = NOT_RUNNING

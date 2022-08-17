@@ -1,4 +1,5 @@
 import hashlib
+import logging
 from pathlib import Path
 
 from smart_agenda.lib import Agenda
@@ -22,4 +23,5 @@ def get_filepath(agenda: Agenda, parent: Path = None) -> Path:
         agenda_hash = hashlib.md5(hash_content.encode()).hexdigest()
         filepath = filepath.with_name(f"{filename}_{agenda_hash[:8]}")
 
+    logging.debug(filepath)
     return filepath

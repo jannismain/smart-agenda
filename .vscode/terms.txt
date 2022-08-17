@@ -1,3 +1,4 @@
+caplog
 getchlib
 IMPORTMISMATCH
 noxfile
