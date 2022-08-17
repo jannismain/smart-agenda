@@ -15,6 +15,7 @@ python = "^3.8"
 click = "^8.1.3"
 pick = "^1.4.0"
 rich = "^12.5.1"
+getchlib = "^1.0.12"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"

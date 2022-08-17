@@ -100,6 +100,14 @@ pycodestyle = ">=2.9.0,<2.10.0"
 pyflakes = ">=2.5.0,<2.6.0"
 
 [[package]]
+name = "getchlib"
+version = "1.0.12"
+description = "Library for reading key presses"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "iniconfig"
 version = "1.1.1"
 description = "iniconfig: brain-dead simple config-ini parsing"
@@ -319,7 +327,7 @@ gui = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "fbe3141968f55baf436ee1c99d89a066632cb3e712b3fa6170235eac86f5cc1e"
+content-hash = "729bc7fde0adcb2da611e8c0376abe8580257f32dd8b771fc9356a689a3dffbc"
 
 [metadata.files]
 atomicwrites = []
@@ -330,6 +338,7 @@ colorama = []
 commonmark = []
 coverage = []
 flake8 = []
+getchlib = []
 iniconfig = []
 isort = []
 mccabe = []
