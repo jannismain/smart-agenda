@@ -11,7 +11,7 @@ env = {}
 
 
 @pytest.fixture()
-def cli(caplog) -> Callable:
+def cli() -> Callable:
     def invoke(*args, mix_stderr=False, **kwargs):
         runner: CliRunner = CliRunner(mix_stderr=mix_stderr)
 
@@ -23,6 +23,32 @@ def cli(caplog) -> Callable:
         return runner.invoke(f_cli, *args, env=env, **kwargs)
 
     yield invoke
+
+
+def test_main(cli):
+    rv: Result = cli()
+    logging.info(rv.stdout)
+    assert rv.exit_code == 0
+
+
+def test_script():
+    import subprocess
+
+    cmd = ["smart-agenda", "--help"]
+    assert subprocess.check_call(cmd) == 0
+    output = subprocess.check_output(cmd).decode()
+    logging.info(output)
+    assert output
+
+
+def test_module_exec():
+    import subprocess
+
+    cmd = ["python", "-m", "smart_agenda", "--help"]
+    assert subprocess.check_call(cmd) == 0
+    output = subprocess.check_output(cmd).decode()
+    logging.info(output)
+    assert output
 
 
 def test_cli_version(cli):

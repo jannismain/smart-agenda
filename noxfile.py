@@ -17,11 +17,13 @@ def lint(session: nox.Session):
 
 @nox.session(python=supported_python_versions)
 def test(session: nox.Session):
-    session.install("pytest")
-    session.install("pytest-cov")
-    session.install(".")
-
-    session.env.update({"PY_IGNORE_IMPORTMISMATCH": "1"})
+    # poetry
+    session.run("poetry", "install", "--no-interaction", "--quiet", external=True)
+    # other
+    # session.install("pytest")
+    # session.install("pytest-cov")
+    # session.install(".")
+    # session.env.update({"PY_IGNORE_IMPORTMISMATCH": "1"})
 
     args = session.posargs or []
     session.run("pytest", *args)
@@ -41,5 +43,5 @@ def test_logging(session: nox.Session):
     if session.posargs and session.posargs[0] in ["DEBUG", "INFO", "WARN", "WARNING", "ERROR", "CRITICAL"]:
         lvl = session.posargs.pop(0)
     session.run(
-        "nox", "-r", "-s", "test", "-p", session.python, "--", f"--log-cli-level={lvl}", *session.posargs, external=True
+        "nox", "-s", "test", "-p", session.python, "--", f"--log-cli-level={lvl}", *session.posargs, external=True
     )

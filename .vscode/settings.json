@@ -11,5 +11,5 @@
     },
     "python.testing.pytestEnabled": true,
     "git.detectSubmodules": false,
-    "python.linting.flake8Enabled": true
+    "python.linting.flake8Enabled": true,
 }

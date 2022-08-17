@@ -1,27 +1,33 @@
 # Python packaging & distribution
 [build-system]
-requires = ["setuptools >= 63.0.0", "setuptools.scm", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
-[project]
-name = "smart_agenda"
+[tool.poetry]
+name = "smart-agenda"
+version = "0.0.1"
 description = "Keep track of your agenda and passed time during meetings."
-readme = "README.md"
-requires-python = ">=3.8"
-dynamic = ["version"]
-authors = [{ "name" = "Jannis Mainczyk", "email" = "jmainczyk@gmail.com" }]
-license = { text = "MIT" }
-dependencies = ["click", "pick", "rich"]
+authors = ["Jannis Mainczyk <jmainczyk@gmail.com>"]
+license = "MIT"
 
-[project.optional-dependencies]
-gui = ["pyside6"]
+[tool.poetry.dependencies]
+python = "^3.8"
+click = "^8.1.3"
+pick = "^1.4.0"
+rich = "^12.5.1"
 
-[project.scripts]
+[tool.poetry.dev-dependencies]
+black = "^22.6.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+
+[tool.poetry.scripts]
 smart-agenda = "smart_agenda.cli:cli"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
+[tool.poetry.extras]
+gui = ["pyside6"]
 
 # https://docs.pytest.org/customize.html
 [tool.pytest.ini_options]
@@ -35,11 +41,12 @@ testpaths = ["tests", "src"]
 addopts = "--doctest-modules --doctest-continue-on-failure"
 # strip u'' and b'' from output strings in py2, to make py2 test output the same as py3
 doctest_optionflags = "ALLOW_UNICODE ALLOW_BYTES IGNORE_EXCEPTION_DETAIL"
+markers = ["e2e: end-to-end test"]
 
 [tool.coverage.run]
 branch = true
+source = ["src"]
 command_line = "-m pytest --cov --cov-config=pyproject.toml --cov-branch --cov-report term --cov-report html:build/coverage"
-source = ["smart_agenda"]
 omit = ["**/gui.py", "**/__main__.py"]
 
 [tool.coverage.report]
