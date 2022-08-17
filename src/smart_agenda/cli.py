@@ -40,11 +40,13 @@ AOB          6:00
 @click.option("-v", "--verbose", count=True, default=0, help="Increase verbosity of output.")
 @click.option("--version", help="Print version number and exit.", is_flag=True, callback=cb_version, expose_value=False)
 @click.option("--example", help="Show example agenda.", is_flag=True)
+@click.option("--skip-input", help="Skip manual agenda input.", is_flag=True)
+@click.option("--demo", help="Shorthand for `--example --skip-input`.", is_flag=True)
 @click.option("--save/--no-save", help="Save agenda for later.", default=True, show_default=True, is_flag=True)
 @recent
 @click.argument("file", type=click.File(), required=False)
 @click.pass_context
-def cli(ctx, verbose, example, save, recent, file):
+def cli(ctx, verbose, example, save, recent, skip_input, demo, file):
     """Smart Agenda."""
     console.clear()
     if file:
@@ -53,6 +55,8 @@ def cli(ctx, verbose, example, save, recent, file):
     elif recent:
         content = recent.open().read()
         save = False
+    elif (example and skip_input) or demo:
+        content = EXAMPLE_AGENDA
     else:
         content = prompt_for_agenda(echo_template=example)
 
