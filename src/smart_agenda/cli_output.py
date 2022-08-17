@@ -36,7 +36,7 @@ def render_running_agenda(agenda: Agenda) -> Table:
             # time += agenda.delta_for(row_idx)
             # time = f"[dim]{format_td(time)}"
             # show logged worktime
-            if item.worktime < timedelta(seconds=5):
+            if item.worktime < timedelta(seconds=3):
                 time = ""
             else:
                 time = f"[dim]{format_td(item.worktime, positive_sign=False)}"
