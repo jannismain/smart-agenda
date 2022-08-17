@@ -7,11 +7,11 @@ build-backend = "setuptools.build_meta"
 name = "smart_agenda"
 description = "Keep track of your agenda and passed time during meetings."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 dynamic = ["version"]
 authors = [{ "name" = "Jannis Mainczyk", "email" = "jmainczyk@gmail.com" }]
 license = { text = "MIT" }
-dependencies = ["click"]
+dependencies = ["click", "pick", "rich"]
 
 [project.optional-dependencies]
 gui = ["pyside6"]
@@ -29,16 +29,18 @@ log_cli = false
 log_cli_level = "INFO"
 # to log full filepath + line, use (%(pathname)s:%(lineno)d)
 log_format = "%(asctime)s.%(msecs)03d  %(filename)20s:%(lineno)d  %(levelname)8s  %(message)s"
-norecursedirs = [".*", "build", "env", "*.egg"]
-testpaths = ["test"]
+norecursedirs = [".*", "build", "env", "*.egg", ".nox"]
+testpaths = ["tests", "src"]
 # also run doctests with test suite
-addopts = "--doctest-modules --doctest-continue-on-failure --benchmark-disable"
+addopts = "--doctest-modules --doctest-continue-on-failure --cov"
 # strip u'' and b'' from output strings in py2, to make py2 test output the same as py3
 doctest_optionflags = "ALLOW_UNICODE ALLOW_BYTES IGNORE_EXCEPTION_DETAIL"
-markers = [
-  """skip_test: marks test to skip""",
-  """slow: marks tests as slow (deselect with '-m "not slow"' or '-k "not slow"')""",
-]
+
+[tool.coverage.run]
+branch = true
+command_line = "-m pytest"
+omit = ["**/gui.py", "**/tui.py", "**/__main__.py"]
+source = ["smart_agenda"]
 
 [tool.black]
 line-length = 120

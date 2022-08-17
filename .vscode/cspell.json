@@ -1,0 +1,38 @@
+{
+    "version": "0.2",
+    "enabled": true,
+    "ignorePaths": [
+        "ext",
+        "Makefile",
+        ".vscode",
+        ".gitignore",
+        ".dockerignore",
+        "Dockerfile",
+        ".gitlab-ci.yml",
+        ".pre-commit-config.yaml",
+        "pyproject.toml"
+    ],
+    "dictionaryDefinitions": [
+        {
+            "name": "project-terms",
+            "path": "terms.txt",
+            "description": "Project-specific terms",
+            "addWords": true
+        }
+    ],
+    "dictionaries": [
+        "django",
+        "dependencies",
+        "project-terms",
+        "python",
+        "softwareTerms",
+        "html",
+        "css",
+        "npm",
+        "cpp"
+    ],
+    "words": [],
+    "ignoreWords": [],
+    "language": "en-US",
+    "useGitignore": true
+}
