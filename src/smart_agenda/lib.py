@@ -104,9 +104,11 @@ class Agenda:
 
     @property
     def delta(self):
+        """Return delta time for the current item."""
         return self.delta_for(self.current_item_idx)
 
     def delta_for(self, idx: int):
+        """Return delta time for item at *idx*."""
         rv = timedelta()
         for item in self.items[:idx]:
             rv += item.delta
@@ -120,7 +122,7 @@ class Agenda:
         """Go to next agenda item.
 
         Returns:
-            Last agenda item was completed.
+            True when there are no more agenda items to work on. False otherwise.
         """
         if self.current_item_idx >= 0:
             self.current_item.stop()
@@ -143,12 +145,26 @@ class Agenda:
 
 
 def time_passed(start: datetime, end: datetime = None) -> timedelta:
+    """Return how much time has passed between start and (optional) end."""
     if end is None:
         end = datetime.now()
     return end - start
 
 
 def format_td(td: timedelta, positive_sign=True) -> str:
+    """Format timedelta object.
+
+    Examples:
+        >>> from datetime import timedelta
+        >>> format_td(timedelta(seconds=1))
+        '+00:01'
+        >>> format_td(timedelta(minutes=1))
+        '+01:00'
+        >>> format_td(timedelta(hours=1, minutes=2, seconds=3))
+        '+1:02:03'
+        >>> format_td(timedelta(minutes=2, seconds=12), positive_sign=False)
+        '02:12'
+    """
     sign = "-" if td < timedelta() else "+" if positive_sign else ""
     s = int(abs(td.total_seconds()))
     h, s = divmod(s, 3600)
@@ -160,14 +176,21 @@ def format_td(td: timedelta, positive_sign=True) -> str:
     return rv
 
 
-def select_agenda_file(filepath: Path = Path.cwd()) -> str:
-    if filepath is None:
-        md_files = list(filepath.glob("*.md"))
-        option, idx = pick.pick(md_files)
+def select_agenda_file(parent: Path = None) -> str:
+    """Select an agenda file from *parent* directory.
+
+    Args:
+        parent: directory to scan for agenda files (defaults to `Path.cwd`).
+    """
+    if parent is None:
+        parent = Path.cwd()
+    md_files = list(parent.glob("*.md"))
+    option, idx = pick.pick(md_files)
     return option
 
 
 def format_agenda(agenda: Agenda):
+    """Format the given agenda."""
     s = ""
     if agenda.title:
         s += f"{agenda.title}\n{len(agenda.title)*'-'}"
@@ -178,4 +201,5 @@ def format_agenda(agenda: Agenda):
 
 
 def print_agenda(agenda: Agenda):
+    """Print agenda to stdout."""
     print(format_agenda(agenda))

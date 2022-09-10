@@ -1,3 +1,5 @@
+"""Utility methods."""
+
 import hashlib
 import logging
 from pathlib import Path
@@ -6,6 +8,7 @@ from smart_agenda.lib import Agenda
 
 
 def get_filepath(agenda: Agenda, parent: Path = None) -> Path:
+    """Create a filename unique for the given *agenda* relative to *parent*."""
     # create filename from agenda title
     filename = "-".join(agenda.title.split()) if agenda.title else "unnamed-agenda"
 

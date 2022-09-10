@@ -20,6 +20,7 @@ from smart_agenda.util import get_filepath
 
 
 def cb_version(ctx, param, value):
+    """When `--version` is given, echo version and exit."""
     if value:
         click.echo(__version__)
         exit(0)
@@ -87,6 +88,7 @@ def cli(ctx, verbose, example, save, recent, skip_input, demo, edit, title, file
 
 
 def prompt_for_agenda(template: str = None, title: str = None) -> str:
+    """Prompt user to enter agenda."""
     console.print("[d][i]Enter agenda in external editor. Close the file to continue...")
     if title:
         if template.startswith("#"):
@@ -104,6 +106,7 @@ KEYS_NEXT = ("n", KEY_DOWN, KEY_RIGHT, KEY_ENTER)
 
 
 def main(agenda: Agenda):
+    """Main loop to handle cli state."""
     console.clear()
     console.print(render_initial_agenda(agenda))
     console.input("Press enter to start...")

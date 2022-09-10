@@ -1,3 +1,5 @@
+"""Anything related to how the cli generates its output."""
+
 from datetime import timedelta
 
 from rich.table import Table
@@ -16,13 +18,15 @@ def _get_empty_table(title=None) -> Table:
 
 
 def render_initial_agenda(agenda: Agenda) -> Table:
+    """Render table for an agenda that hasn't been started yet."""
     table = _get_empty_table(agenda.title)
     for item in agenda.items:
         table.add_row(item.name, format_td(item.duration, positive_sign=False))
     return table
 
 
-def render_running_agenda(agenda: Agenda) -> Table:
+def render_running_agenda(agenda: Agenda, show_delta_for="previous+current") -> Table:
+    """Render a table for a currently running agenda."""
     table = _get_empty_table(agenda.title)
     for row_idx, item in enumerate(agenda.items):
         name = item.name
@@ -65,6 +69,7 @@ def render_running_agenda(agenda: Agenda) -> Table:
 
 
 def render_completed_agenda(agenda: Agenda) -> Table:
+    """Render table for a previously completed agenda."""
     table = _get_empty_table(agenda.title)
     for item in agenda.items:
         name = f"{item.name}"
