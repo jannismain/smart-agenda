@@ -10,9 +10,14 @@ exclude =
     .pytest_cache,
     .mypy_cache,
     .vscode
+ignore =
+    # Missing docstring in magic method
+    D105
 per-file-ignores =
     # module-level import not at top of file
     # -> required to prevent cyclical import issues
     cli.py: E402
+    __init__.py: D10
+    __main__.py: D10
 max-complexity = 10
 max-line-length = 120

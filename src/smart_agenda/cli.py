@@ -68,7 +68,6 @@ def cli(ctx, verbose, example, save, recent, skip_input, demo, edit, title, file
         content = prompt_for_agenda(template=EXAMPLE_AGENDA if example else "", title=title)
 
     if not content.strip():
-        # click.secho("No text provided.", dim=True, italic=True)
         exit(0)
     agenda = Agenda.loads(content)
     if not len(agenda.items):
