@@ -1,15 +1,12 @@
 {
-    "python.formatting.provider": "black",
-    "[python]": {
-        "gitlens.codeLens.symbolScopes": [
-            "!Module"
-        ],
-        "editor.wordBasedSuggestions": false,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": true
-        },
-    },
-    "python.testing.pytestEnabled": true,
-    "git.detectSubmodules": false,
-    "python.linting.flake8Enabled": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "gitlens.codeLens.symbolScopes": ["!Module"],
+    "editor.wordBasedSuggestions": "off",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "python.testing.pytestEnabled": true,
+  "git.detectSubmodules": false
 }
